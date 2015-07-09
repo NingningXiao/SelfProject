@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8">
+    <title>移动端图片滑动组件开发</title>
+    <style type="text/css">
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            overflow: hidden;
+        }
+        .slider{
+            position: relative;
+        }
+        .slider ul, .slider li{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .slider li{
+            position: absolute;
+        }
+        .slider img{
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="slider" class="slider">
+    </div>
+    <script type="text/javascript">
+        var data = [
+            {
+                img: "img/1.jpg",
+                width: 768,
+                height: 320
+            },
+            {
+                img: "img/2.jpg",
+                width: 768,
+                height: 320
+            },
+            {
+                img: "img/3.jpg",
+                width: 768,
+                height: 320
+            },
+            {
+                img: "img/4.jpg",
+                width: 768,
+                height: 320
+            },
+            {
+                img: "img/5.jpg",
+                width: 768,
+                height: 320
+            },
+            {
+                img: "img/7.jpg",
+                width: 768,
+                height: 320
+            },
+            {
+                img: "img/8.jpg",
+                width: 768,
+                height: 320
+            },
+            {
+                img: "img/9.jpg",
+                width: 320,
+                height: 320
+            },
+            {
+                img: "img/10.jpg",
+                width: 960,
+                height: 800
+            },
+            {
+                img: "img/11.jpeg",
+                width: 1280,
+                height: 800
+            }
+        ];
+
+        function Slider(options){
+            this.wrap = document.getElementById(options.wrap);
+            this.data = options.data;
+            this.loop = options.loop || false;
+            this.items = this.wrap.getElementsByTagName("li");
+            this.init();
+            this.renderDom();
+            this.bindEvent();
+        }
+        Slider.prototype.init = function(){
+            this.wWidth = window.innerWidth;
+            this.wHeight = window.innerHeight;
+            this.scale = this.wWidth / this.wHeight;
+            this.cIndex = 0;
+        };
+        Slider.prototype.renderDom = function(){
+            var wrap = this.wrap,
+                data = this.data,
+                len = data.length,
+                scale = this.scale,
+                wWidth = this.wWidth;
+
+            var ulElem = document.createElement("ul"),
+                html = '',
+                item = null,
+                style = '';
+
+            for(var i = 0; i<len; i++){
+                item = data[i];
+                if(item.width/item.height>scale){
+                    style = "width: 100%; height: auto";
+                }else{
+                    style = "height: 100%; width: auto";
+                }
+                html += '<li style="'+"-webkit-transform: translate3D("+i*wWidth+"px, 0, 0); width: "+wWidth+"px;"+'"><img src="'+data[i].img+'" style="'+style+'"/></li>';
+            }
+            ulElem.innerHTML = html;
+            wrap.appendChild(ulElem);
+        };
+        Slider.prototype.bindEvent = function(){
+            var elem = this.wrap,
+                wWidth = this.wWidth,
+                that = this,
+                time;
+
+            var cIndex, pIndex, nIndex;
+            var startX, moveX;
+
+            function startHandler(e){
+                startX = e.touches[0].pageX;
+                time = new Date().getTime();
+
+                var IndexObj = that.countIndex();
+                cIndex = IndexObj.cIndex;
+                pIndex = IndexObj.pIndex;
+                nIndex = IndexObj.nIndex;
+            }
+
+            function moveHandler(e){
+                var touches = e.changedTouches[0];
+                var extraStyle = " width: "+wWidth+"px; -webkit-transition: none";
+
+                moveX = touches.pageX - startX;
+
+                that.items[cIndex].style.cssText = "-webkit-transform: translate3D("+(moveX)+"px, 0, 0);"+extraStyle;
+                if(moveX<0 && nIndex != cIndex){
+                    that.items[nIndex].style.cssText = "-webkit-transform: translate3D("+(wWidth+moveX)+"px, 0, 0);"+extraStyle;
+                }else if(pIndex != cIndex){
+                    that.items[pIndex].style.cssText = "-webkit-transform: translate3D("+(-wWidth+moveX)+"px, 0, 0);"+extraStyle;
+                }
+            }
+            function endHandler(){
+                if(Math.abs(moveX)>wWidth/3 || (new Date().getTime()-time<100 && Math.abs(moveX)>wWidth/6)){
+                    if(moveX<0){
+                        that.move("+1");
+                    }else{
+                        that.move("-1");
+                    }
+                }else{
+                    if(moveX<0){
+                        that.move("+0");
+                    }else{
+                        that.move("-0");
+                    }
+                }
+            }
+            elem.addEventListener("touchstart", startHandler, false);
+            elem.addEventListener("touchmove", moveHandler, false);
+            elem.addEventListener("touchend", endHandler, false);
+        };
+        Slider.prototype.countIndex = function(){
+            var len = this.data.length, cIndex, pIndex, nIndex;
+
+            cIndex = this.cIndex,
+                    nIndex = cIndex+1,
+                    pIndex = cIndex-1;
+
+            if(nIndex>len-1){
+                nIndex = this.loop ? 0 : len-1;
+            }
+            if(pIndex<0){
+                pIndex = this.loop ? len-1 : 0;
+            }
+
+            return {
+                pIndex: pIndex,
+                cIndex: cIndex,
+                nIndex: nIndex
+            }
+        }
+        Slider.prototype.move = function(derection){
+            var cIndex,nIndex,pIndex, that = this;
+
+            var IndexObj = this.countIndex();
+            cIndex = IndexObj.cIndex;
+            nIndex = IndexObj.nIndex;
+            pIndex = IndexObj.pIndex;
+
+            var extraStyle = " width: "+that.wWidth+"px;"+"-webkit-transition: all ease-in 0.3s";
+
+            if(derection.trim() == "+1"){
+                //向右滑
+                that.items[cIndex].style.cssText = "-webkit-transform: translate3D("+(-that.wWidth)+"px, 0, 0);"+extraStyle;
+                that.items[nIndex].style.cssText = "-webkit-transform: translate3D("+0+"px, 0, 0);"+extraStyle;
+                that.cIndex = nIndex;
+            }else if(derection.trim() == "-1"){
+                //向左滑
+                that.items[cIndex].style.cssText = "-webkit-transform: translate3D("+that.wWidth+"px, 0, 0);"+extraStyle;
+                that.items[pIndex].style.cssText = "-webkit-transform: translate3D("+0+"px, 0, 0);"+extraStyle;
+                that.cIndex = pIndex;
+            }else if(derection.trim() == "-0"){
+                //不滑动
+                that.items[cIndex].style.cssText = "-webkit-transform: translate3D("+0+"px, 0, 0);"+extraStyle;
+                pIndex!=cIndex && (that.items[pIndex].style.cssText = "-webkit-transform: translate3D("+(-that.wWidth)+"px, 0, 0);"+extraStyle);
+            }else if(derection.trim() == "+0"){
+                //不滑动
+                that.items[cIndex].style.cssText = "-webkit-transform: translate3D("+0+"px, 0, 0);"+extraStyle;
+                nIndex!=cIndex && (that.items[nIndex].style.cssText = "-webkit-transform: translate3D("+that.wWidth+"px, 0, 0);"+extraStyle);
+            }
+        }
+
+        new Slider({
+            wrap: 'slider',
+            data: data,
+            loop: false
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+    <meta charset="UTF-8" />
+    <title>测试内滚动</title>
+    <style>
+        .page{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+        }
+        .page .header{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 62px;
+            background: #5182E3;
+        }
+        .page .slide{
+            position: absolute;
+            top: 62px;
+            bottom: 0;
+            left: 0;
+            width: 200px;
+            background: #2C3034;
+        }
+        .page .content{
+            position: absolute;
+            left: 200px;
+            top: 62px;
+            right: 0;
+            bottom: 0;
+            overflow: auto;
+            background: #ECEFF3;
+        }
+        .page .overlay{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            overflow: auto;
+        }
+        .page .dialog{
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            margin-left: -600px;
+            margin-bottom: 20px;
+            height: 1200px;
+            width: 1200px;
+            background: #0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <div class="header">大家好，我是头部</div>
+        <div class="slide">大家好，我是侧边栏</div>
+        <div class="content">
+            大家好，我是内容区域
+            大家好，我是内容区域
+            大家好，我是内容区域大家好，我是内容区域大家好，我是内容区域
+            大家好，我是内容区域大家好，我是内容区域
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+            大家好，我是内容区域
+            大家好，我是内容区域
+            大家好，我是内容区域大家好，我是内容区域大家好，我是内容区域
+            大家好，我是内容区域大家好，我是内容区域
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+            大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />大家好，我是内容区域<br />
+        </div>
+        <div class="overlay">
+            <div class="dialog">
+                <div class="dialog-con">我是弹窗的内容区域</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
