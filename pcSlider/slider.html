@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>轮播图-PC版</title>
+    <style>
+        ul,li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .slider-con li{
+            text-align: center;
+        }
+        .slider{
+            position: relative;
+            width: 754px;
+        }
+        .slider-con{
+            margin: 0 auto;
+        }
+        .slider .prev {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            margin-top: -16px;
+            background: url("http://p3.qhimg.com/d/inn/4b82a9c6/slider-left-arrow.png") no-repeat;
+        }
+        .slider .next {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            margin-top: -16px;
+            background: url("http://p6.qhimg.com/d/inn/4b82a9c6/slider-right-arrow.png") no-repeat;
+        }
+        .slider .slider-arrow {
+            width: 19px;
+            height: 33px;
+            text-indent: -9999px;
+        }
+        /*dot样式*/
+        .slider-dot-container{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+        }
+        .slider-dot{
+            display: inline-block;
+            *zoom: 1;
+            width: 9px;
+            border-radius: 50%;
+            height: 0;
+            padding-top: 9px;
+            background: #B7B7B7;
+            overflow: hidden;
+            margin-right: 5px;
+        }
+        .slider-dot-container .slider-dot-selected{
+            background: #F40;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <div class="slider-con">
+            <ul>
+                <li><img src="http://p19.qhimg.com/d/_open360/bigimage/19_500_1.jpg?1437624298681" alt=""/></li>
+                <li><img src="http://p15.qhimg.com/d/_open360/bigimage/19_500_2.jpg" alt=""/></li>
+                <li><img src="http://p19.qhimg.com/d/_open360/bigimage/19_500_3.jpg" alt=""/></li>
+                <li><img src="http://p17.qhimg.com/d/_open360/bigimage/19_500_4.jpg" alt=""/></li>
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://s0.qhimg.com/lib/jquery/1111.js"></script>
+    <script type="text/javascript" src="slider_pc.js"></script>
+    <script type="text/javascript">
+        //防止ie下不支持console.log
+        !window.console && (window.console = {
+            log: function(str){
+                alert(str);
+            }
+        });
+        var option = {
+            width: 636,
+            height: 345,
+            loop: true,
+            arrow: true,
+            dot: false,
+            autoplay: true,
+            duration: 5000
+        };
+        $(".slider").slider(option);
+    </script>
+</body>
+</html>
