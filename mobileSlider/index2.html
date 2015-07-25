@@ -153,6 +153,7 @@
         }
 
         function moveHandler(e){
+            e.preventDefault();
             var touches = e.changedTouches[0];
             var extraStyle = " width: "+wWidth+"px; height: 100%; -webkit-transition: none";
 
@@ -165,8 +166,9 @@
                 that.items[pIndex].style.cssText = "-webkit-transform: translate3D("+(-wWidth+moveX)+"px, 0, 0);"+extraStyle;
             }
         }
-        function endHandler(){
-            if(Math.abs(moveX)>wWidth/3 || (new Date().getTime()-time<100 && Math.abs(moveX)>wWidth/6)){
+        function endHandler(e){
+            e.preventDefault();
+            if(Math.abs(moveX)>wWidth/6 || (new Date().getTime()-time<300 && Math.abs(moveX)>50)){
                 if(moveX<0){
                     that.move("+1");
                 }else{
